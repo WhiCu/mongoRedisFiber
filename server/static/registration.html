@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>reg</title>
+</head>
+<body>
+    <form method="POST" action="/db">
+        <label for="login">Электронная почта</label><br> 
+        <input type="login" id="login" placeholder="Введите ваш login" required>  <br>
+                
+        <label for="password">Пароль</label>  <br>
+        <input type="password" id="password" placeholder="Введите ваш пароль" required>  <br>
+                
+        <button type="submit">Войти</button> 
+    </form>
+</body>
+<script>
+    const f = document.querySelector("form");  
+    f.addEventListener("submit", (e) => {  
+        e.preventDefault(); // предотвращает стандартную отправку формы  
+    
+        fetch("/db", {  
+            method: "POST",  
+            headers: {  
+                "Content-Type": "application/json",  
+            },  
+            body: JSON.stringify({  
+                login: e.target.login.value,  
+                password: e.target.password.value,  
+            })  
+        })  
+        .then(response => {  
+            if (!response.ok) {  
+                console.log("not ok")
+                window.location.href = "/reg"; // перенаправление в случае ошибки  
+                return null
+            }  
+            console.log("ok")
+            window.location.href = "/mouse";  
+            return null
+        })
+    });  
+    </script>
+</html>
